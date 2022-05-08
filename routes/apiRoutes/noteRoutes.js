@@ -1,12 +1,17 @@
 const router = require('express').Router();
-
-const { /* functions will go here */} = require('../../lib/notes');
+const newNote = require('../../lib/notes');
 const notes = require('../../Develop/db/db.json');
 
 router.get('/notes', (req, res) => {
-    res.json(notes);
+    let results = notes;
+    res.json(results);
 });
 
-// router.post( /* notes */)
+router.post('/notes', (req, res) => {
+    // will set id for note based on what next index of array is
+    req.body.id = notes.length.toString();
+    const note = newNote(req.body, notes);
+    res.json(note);
+});
 
 module.exports = router;
